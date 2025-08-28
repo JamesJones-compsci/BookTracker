@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure PostgreSQL connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Add EF Core with Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // Configure Identity to use our custom User class
 builder.Services.AddDefaultIdentity<User>(options =>

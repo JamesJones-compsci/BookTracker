@@ -1,0 +1,44 @@
+@model IEnumerable<BookTracker.Models.Book>
+
+@{
+    ViewData["Title"] = "My Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My Books</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Book</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Author)</th>
+        <th>@Html.DisplayNameFor(model => model.Genre)</th>
+        <th>@Html.DisplayNameFor(model => model.Year)</th>
+        <th>@Html.DisplayNameFor(model => model.User)</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => book.Title)</td>
+            <td>@Html.DisplayFor(modelItem => book.Author)</td>
+            <td>@Html.DisplayFor(modelItem => book.Genre)</td>
+            <td>@Html.DisplayFor(modelItem => book.Year)</td>
+            <td>@(book.User != null ? book.User.UserName : "")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@book.Id">Delete</a> |
+                <a asp-controller="Reviews" asp-action="Create" asp-route-bookId="@book.Id">Add Review</a> |
+                <a asp-controller="Reviews" asp-action="Index" asp-route-bookId="@book.Id">View Reviews</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
